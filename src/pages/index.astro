@@ -1,0 +1,70 @@
+---
+import { Categories, db, ToDos, eq } from "astro:db"
+import TodoList from "../components/TodoList.astro"
+import TodoForm from "../components/TodoForm.astro"
+
+import { getFormDataValue, calculateNewStreak } from "../utils/formUtils"
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData()
+  const formType = formData.get("formType")
+
+  if (formType === "todo") {
+    const categoryId = formData.get("categoryId")
+    const name = formData.get("name")
+    if (typeof categoryId === "string" && typeof name === "string") {
+      await db.insert(ToDos).values({
+        categoryId: categoryId,
+        name,
+        checked: false,
+        streak: 0,
+        id: crypto.randomUUID(),
+      })
+    }
+  } else if (formType === "category") {
+    const name = formData.get("name")
+    if (typeof name === "string") {
+      await db.insert(Categories).values({
+        name,
+        id: crypto.randomUUID(),
+      })
+    }
+  } else if (formType === "updateTodo") {
+    const todoId = getFormDataValue(formData, "todoId")
+    const streakValue = getFormDataValue(formData, "streakValue")
+    const isChecked = formData.get("checked") === "on"
+
+    if (todoId) {
+      const newStreakValue = calculateNewStreak(streakValue, isChecked)
+
+      await db
+        .update(ToDos)
+        .set({
+          checked: isChecked,
+          streak: newStreakValue,
+        })
+        .where(eq(ToDos.id, todoId))
+    }
+  }
+}
+
+const categories = await db.select().from(Categories)
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Todo App with Streaks</title>
+  </head>
+  <body>
+    <h1>Categories</h1>
+    <ul>
+      {categories.map((category) => <li>{category.name}</li>)}
+    </ul>
+    <TodoList />
+    <TodoForm />
+  </body>
+</html>

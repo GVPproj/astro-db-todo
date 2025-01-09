@@ -55,6 +55,14 @@ export async function handleFormSubmission(formData: FormData) {
       break
     }
 
+    case "deleteTodo": {
+      const todoId = getFormDataValue(formData, "todoId")
+      if (todoId) {
+        await db.delete(ToDos).where(eq(ToDos.id, todoId))
+      }
+      break
+    }
+
     case "updateTodo": {
       const todoId = getFormDataValue(formData, "todoId")
       const streakValue = getFormDataValue(formData, "streakValue")

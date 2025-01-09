@@ -1,5 +1,5 @@
 ---
-
+import { ClientRouter } from "astro:transitions"
 ---
 
 <html lang="en">
@@ -10,6 +10,7 @@
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="dark" />
     <title>Todo App with Streaks</title>
+    <ClientRouter />
   </head>
   <body>
     <section class="container">
@@ -22,6 +23,7 @@
   :root {
     font-size: 18px;
     --color-bg: hsl(256, 15%, 12%);
+    --color-bg-light: hsl(256, 15%, 28%);
     --color-text: hsl(256, 10%, 90%);
     --color-border: hsl(256, 15%, 45%);
     --color-link: hsl(265, 80%, 65%);
@@ -32,13 +34,7 @@
     background-color: var(--color-bg);
     color: var(--color-text);
   }
-  button {
-    background-color: var(--color-link);
-    color: var(--color-bg);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-  }
+
   .container {
     display: flex;
     gap: 8rem;

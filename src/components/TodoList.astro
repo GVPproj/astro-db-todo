@@ -6,8 +6,7 @@ const categories = await db.select().from(Categories)
 const todos = await db.select().from(ToDos)
 ---
 
-<div>
-  <h1>ToDos</h1>
+<div transition:animate="fade">
   {
     categories.map((category) => {
       const categoryTodos = todos.filter(
@@ -33,5 +32,8 @@ const todos = await db.select().from(ToDos)
   ul {
     list-style-type: none;
     padding: 0;
+  }
+  li {
+    padding: 0.25rem 0;
   }
 </style>

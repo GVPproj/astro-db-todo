@@ -1,5 +1,5 @@
 ---
-const { todo, categoryName } = Astro.props
+const { todo } = Astro.props
 ---
 
 <div class="todo-container">
@@ -22,6 +22,12 @@ const { todo, categoryName } = Astro.props
         {todo.name}
       </label>
     </div>
+  </form>
+  <form method="POST">
+    <input type="hidden" name="formType" value="deleteTodo" />
+    <input type="hidden" name="todoId" value={todo.id} />
+    <input type="hidden" name="_method" value="DELETE" />
+    <button type="submit"> Delete </button>
   </form>
 </div>
 
@@ -69,8 +75,31 @@ const { todo, categoryName } = Astro.props
     gap: 1rem;
     align-items: baseline;
   }
+  button {
+    font-family: inherit;
+    background-color: var(--color-bg);
+    color: var(--color-bg);
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  .todo-item {
+    min-width: 20ch;
+  }
+  button:hover {
+    background-color: var(--color-link);
+  }
   .todo-container {
     display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  .todo-container:hover {
+    background-color: var(--color-bg-light);
   }
 
   .streak {

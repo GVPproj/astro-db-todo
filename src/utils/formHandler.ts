@@ -15,6 +15,7 @@ export async function handleFormSubmission(formData: FormData) {
           checked: false,
           streak: 0,
           id: crypto.randomUUID(),
+          updatedAt: new Date(),
         })
       }
       break
@@ -74,6 +75,7 @@ export async function handleFormSubmission(formData: FormData) {
           .set({
             checked: isChecked,
             streak: newStreakValue,
+            updatedAt: new Date(),
           })
           .where(eq(ToDos.id, todoId))
       }

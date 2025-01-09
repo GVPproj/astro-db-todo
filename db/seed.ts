@@ -20,6 +20,7 @@ export default async function seed() {
       checked: false,
       streak: 0,
       id: crypto.randomUUID(),
+      updatedAt: new Date(),
     },
     {
       categoryId: "werwer",
@@ -27,6 +28,7 @@ export default async function seed() {
       checked: false,
       streak: 0,
       id: crypto.randomUUID(),
+      updatedAt: new Date(),
     },
   ])
 }

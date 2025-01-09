@@ -14,6 +14,7 @@ const ToDos = defineTable({
     name: column.text(),
     checked: column.boolean(),
     streak: column.number(),
+    updatedAt: column.date(),
   },
 })
 

@@ -1,7 +1,4 @@
 # Roadmap
 
-- login page
-- authenticated route
-- netlify adapter
-- database needs updatedAt
+- authenticated routes instead of conditional index render
 - streak checks day / hour etc

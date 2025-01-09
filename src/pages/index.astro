@@ -1,64 +1,13 @@
 ---
-import { Categories, db, ToDos, eq } from "astro:db"
 import TodoList from "../components/TodoList.astro"
 import TodoForm from "../components/TodoForm.astro"
-import { getFormDataValue, calculateNewStreak } from "../utils/formUtils"
+import { handleFormSubmission } from "../utils/formHandler"
 
-// Handle POST requests with a redirect
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData()
-  const formType = formData.get("formType")
-
-  if (formType === "todo") {
-    // Create a new ToDo
-    const categoryId = formData.get("categoryId")
-    const name = formData.get("name")
-    if (typeof categoryId === "string" && typeof name === "string") {
-      await db.insert(ToDos).values({
-        categoryId: categoryId,
-        name,
-        checked: false,
-        streak: 0,
-        id: crypto.randomUUID(),
-      })
-    }
-  } else if (formType === "category") {
-    // Create a new Category
-    const name = formData.get("name")
-    if (typeof name === "string") {
-      await db.insert(Categories).values({
-        name,
-        id: crypto.randomUUID(),
-      })
-    }
-  } else if (formType === "removeCategory") {
-    // Remove a Category
-    const categoryId = getFormDataValue(formData, "categoryId")
-    if (categoryId) {
-      await db.delete(Categories).where(eq(Categories.id, categoryId))
-    }
-  } else if (formType === "updateTodo") {
-    // Update Streaks / Checkboxes
-    const todoId = getFormDataValue(formData, "todoId")
-    const streakValue = getFormDataValue(formData, "streakValue")
-    const isChecked = formData.get("checked") === "on"
-    if (todoId) {
-      const newStreakValue = calculateNewStreak(streakValue, isChecked)
-      await db
-        .update(ToDos)
-        .set({
-          checked: isChecked,
-          streak: newStreakValue,
-        })
-        .where(eq(ToDos.id, todoId))
-    }
-  }
-
-  // Return a redirect response
+  await handleFormSubmission(formData)
   return Astro.redirect("/", 303)
 }
-
-const categories = await db.select().from(Categories)
 ---
 
 <html lang="en">
@@ -69,28 +18,21 @@ const categories = await db.select().from(Categories)
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="dark" />
     <title>Todo App with Streaks</title>
-    <script>
-      document.documentElement.style.setProperty(
-        "--color-bg",
-        "hsl(256, 15%, 12%)"
-      )
-      document.documentElement.style.setProperty(
-        "--color-text",
-        "hsl(256, 10%, 90%)"
-      )
-    </script>
   </head>
   <body>
     <div class="container">
-      <TodoList />
       <TodoForm />
+      <TodoList />
     </div>
   </body>
 </html>
 
 <style>
   :root {
-    --color-border: hsl(256, 15%, 25%);
+    font-size: 18px;
+    --color-bg: hsl(256, 15%, 12%);
+    --color-text: hsl(256, 10%, 90%);
+    --color-border: hsl(256, 15%, 45%);
     --color-link: hsl(265, 80%, 65%);
     --color-link-hover: hsl(265, 90%, 75%);
   }
@@ -99,11 +41,6 @@ const categories = await db.select().from(Categories)
     background-color: var(--color-bg);
     color: var(--color-text);
   }
-  body {
-    display: grid;
-    place-content: center;
-  }
-  /* Base checkbox styling */
   button {
     background-color: var(--color-link);
     color: var(--color-bg);
@@ -113,9 +50,9 @@ const categories = await db.select().from(Categories)
   }
   .container {
     display: flex;
-    gap: 3rem;
-    padding: 1rem;
-    margin: 0 auto;
+    gap: 8rem;
+    padding: 1rem 3rem;
+    /* margin: 0 auto; */
 
     max-width: 1024px;
     line-height: 1.5;

@@ -17,9 +17,7 @@ const { todo, categoryName } = Astro.props
       />
       {todo.name}
     </label>
-    <span class="todo-category">
-      {categoryName}
-    </span>
+
     <span>
       streak: {todo.streak}
     </span>
@@ -28,20 +26,15 @@ const { todo, categoryName } = Astro.props
 
 <style>
   input[type="checkbox"] {
-    /* Add if not using autoprefixer */
     -webkit-appearance: none;
-    /* Remove most all native input styles */
     appearance: none;
-    /* For iOS < 15 */
-    background-color: var(--color-border);
-    /* Not removed via appearance */
+    background-color: var(--color-bg);
     margin: 0;
-
     font: inherit;
     color: currentColor;
     width: 1.15em;
     height: 1.15em;
-    border: 0.15em solid currentColor;
+    border: 2px solid var(--color-border);
     border-radius: 0.15em;
     transform: translateY(-0.075em);
 
@@ -74,6 +67,7 @@ const { todo, categoryName } = Astro.props
     display: flex;
     gap: 1rem;
     align-items: baseline;
+    min-width: 300px;
   }
   .todo-item {
     display: flex;

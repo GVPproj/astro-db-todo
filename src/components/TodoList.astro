@@ -9,9 +9,22 @@ const todos = await db.select().from(ToDos)
 <div>
   <h1>ToDos</h1>
   {
-    todos.map((todo) => {
-      const category = categories.find((c) => c.id === todo.categoryId)
-      return <Todo todo={todo} categoryName={category?.name} />
+    categories.map((category) => {
+      const categoryTodos = todos.filter(
+        (todo) => todo.categoryId === category.id
+      )
+      return (
+        <article>
+          <h2>{category.name}</h2>
+          <ul>
+            {categoryTodos.map((todo) => (
+              <li>
+                <Todo todo={todo} />
+              </li>
+            ))}
+          </ul>
+        </article>
+      )
     })
   }
 </div>

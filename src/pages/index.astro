@@ -31,6 +31,12 @@ if (Astro.request.method === "POST") {
         id: crypto.randomUUID(),
       })
     }
+  } else if (formType === "removeCategory") {
+    // Remove a Category
+    const categoryId = getFormDataValue(formData, "categoryId")
+    if (categoryId) {
+      await db.delete(Categories).where(eq(Categories.id, categoryId))
+    }
   } else if (formType === "updateTodo") {
     // Update Streaks / Checkboxes
     const todoId = getFormDataValue(formData, "todoId")

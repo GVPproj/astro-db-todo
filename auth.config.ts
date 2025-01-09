@@ -16,9 +16,6 @@ export default defineConfig({
       profile(profile) {
         return {
           id: profile.id.toString(),
-          name: profile.name || profile.login,
-          email: profile.email,
-          image: profile.avatar_url,
           login: profile.login,
         }
       },
@@ -28,7 +25,8 @@ export default defineConfig({
     signIn: async ({ profile }) => {
       if (!profile) return false
       const githubProfile = profile as CustomProfile
-      const allowedUsers = ["GVPproj"]
+      const allowedUsers =
+        import.meta.env.ALLOWED_GITHUB_USERS?.split(",") || []
       return allowedUsers.includes(githubProfile.login)
     },
   },

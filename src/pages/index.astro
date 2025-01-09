@@ -61,7 +61,18 @@ const categories = await db.select().from(Categories)
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="dark" />
     <title>Todo App with Streaks</title>
+    <script>
+      document.documentElement.style.setProperty(
+        "--color-bg",
+        "hsl(256, 15%, 12%)"
+      )
+      document.documentElement.style.setProperty(
+        "--color-text",
+        "hsl(256, 10%, 90%)"
+      )
+    </script>
   </head>
   <body>
     <div class="container">
@@ -73,14 +84,12 @@ const categories = await db.select().from(Categories)
 
 <style>
   :root {
-    --color-bg: hsl(256, 15%, 12%);
-    --color-text: hsl(256, 10%, 90%);
     --color-border: hsl(256, 15%, 25%);
     --color-link: hsl(265, 80%, 65%);
     --color-link-hover: hsl(265, 90%, 75%);
   }
   html {
-    font-family: system-ui, sans-serif;
+    font-family: monospace;
     background-color: var(--color-bg);
     color: var(--color-text);
   }

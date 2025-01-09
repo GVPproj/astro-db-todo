@@ -1,0 +1,51 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="dark" />
+    <title>Todo App with Streaks</title>
+  </head>
+  <body>
+    <section class="container">
+      <slot />
+    </section>
+  </body>
+</html>
+
+<style>
+  :root {
+    font-size: 18px;
+    --color-bg: hsl(256, 15%, 12%);
+    --color-text: hsl(256, 10%, 90%);
+    --color-border: hsl(256, 15%, 45%);
+    --color-link: hsl(265, 80%, 65%);
+    --color-link-hover: hsl(265, 90%, 75%);
+  }
+  html {
+    font-family: monospace;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+  button {
+    background-color: var(--color-link);
+    color: var(--color-bg);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+  .container {
+    display: flex;
+    gap: 8rem;
+    padding: 1rem 3rem;
+    /* margin: 0 auto; */
+
+    max-width: 1024px;
+    line-height: 1.5;
+  }
+</style>

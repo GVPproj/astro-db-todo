@@ -4,33 +4,65 @@ import { Categories, db } from "astro:db"
 const categories = await db.select().from(Categories)
 ---
 
-<!-- Todo Form -->
-<form method="POST">
-  <input type="hidden" name="formType" value="todo" />
+<div>
+  <h1>Add New</h1>
   <div>
-    <label for="name">Todo Name</label>
-    <input type="text" id="name" name="name" required />
+    <h2>Todo</h2>
+    <!-- Todo Form -->
+    <form method="POST" class="form-container">
+      <input type="hidden" name="formType" value="todo" />
+      <div>
+        <label for="name">Todo Name</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div>
+        <label for="categoryId">Category</label>
+        <select id="categoryId" name="categoryId" required>
+          <option value="">Select a category</option>
+          {
+            categories.map((category) => (
+              <option value={category.id}>{category.name}</option>
+            ))
+          }
+        </select>
+      </div>
+      <button type="submit">Add Todo</button>
+    </form>
   </div>
-  <div>
-    <label for="categoryId">Category</label>
-    <select id="categoryId" name="categoryId" required>
-      <option value="">Select a category</option>
-      {
-        categories.map((category) => (
-          <option value={category.id}>{category.name}</option>
-        ))
-      }
-    </select>
-  </div>
-  <button type="submit">Add Todo</button>
-</form>
 
-<!-- Category Form -->
-<form method="POST">
-  <input type="hidden" name="formType" value="category" />
+  <!-- Category Form -->
   <div>
-    <label for="categoryName">Category Name</label>
-    <input type="text" id="categoryName" name="name" required />
+    <h2>Category</h2>
+    <form method="POST" class="form-container">
+      <input type="hidden" name="formType" value="category" />
+      <div>
+        <label for="categoryName">Category Name</label>
+        <input type="text" id="categoryName" name="name" required />
+      </div>
+      <button type="submit">Add Category</button>
+    </form>
   </div>
-  <button type="submit">Add Category</button>
-</form>
+</div>
+
+<style>
+  button {
+    background-color: var(--color-link);
+    color: var(--color-bg);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: var(--color-link-hover);
+  }
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+</style>

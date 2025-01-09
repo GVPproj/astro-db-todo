@@ -6,10 +6,12 @@ const categories = await db.select().from(Categories)
 const todos = await db.select().from(ToDos)
 ---
 
-<h1>ToDos</h1>
-{
-  todos.map((todo) => {
-    const category = categories.find((c) => c.id === todo.categoryId)
-    return <Todo todo={todo} categoryName={category?.name} />
-  })
-}
+<div>
+  <h1>ToDos</h1>
+  {
+    todos.map((todo) => {
+      const category = categories.find((c) => c.id === todo.categoryId)
+      return <Todo todo={todo} categoryName={category?.name} />
+    })
+  }
+</div>

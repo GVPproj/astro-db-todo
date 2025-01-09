@@ -2,14 +2,15 @@
 import { Categories, db, ToDos, eq } from "astro:db"
 import TodoList from "../components/TodoList.astro"
 import TodoForm from "../components/TodoForm.astro"
-
 import { getFormDataValue, calculateNewStreak } from "../utils/formUtils"
 
+// Handle POST requests with a redirect
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData()
   const formType = formData.get("formType")
 
   if (formType === "todo") {
+    // Create a new ToDo
     const categoryId = formData.get("categoryId")
     const name = formData.get("name")
     if (typeof categoryId === "string" && typeof name === "string") {
@@ -22,6 +23,7 @@ if (Astro.request.method === "POST") {
       })
     }
   } else if (formType === "category") {
+    // Create a new Category
     const name = formData.get("name")
     if (typeof name === "string") {
       await db.insert(Categories).values({
@@ -30,13 +32,12 @@ if (Astro.request.method === "POST") {
       })
     }
   } else if (formType === "updateTodo") {
+    // Update Streaks / Checkboxes
     const todoId = getFormDataValue(formData, "todoId")
     const streakValue = getFormDataValue(formData, "streakValue")
     const isChecked = formData.get("checked") === "on"
-
     if (todoId) {
       const newStreakValue = calculateNewStreak(streakValue, isChecked)
-
       await db
         .update(ToDos)
         .set({
@@ -46,6 +47,9 @@ if (Astro.request.method === "POST") {
         .where(eq(ToDos.id, todoId))
     }
   }
+
+  // Return a redirect response
+  return Astro.redirect("/", 303)
 }
 
 const categories = await db.select().from(Categories)
@@ -60,11 +64,45 @@ const categories = await db.select().from(Categories)
     <title>Todo App with Streaks</title>
   </head>
   <body>
-    <h1>Categories</h1>
-    <ul>
-      {categories.map((category) => <li>{category.name}</li>)}
-    </ul>
-    <TodoList />
-    <TodoForm />
+    <div class="container">
+      <TodoList />
+      <TodoForm />
+    </div>
   </body>
 </html>
+
+<style>
+  :root {
+    --color-bg: hsl(256, 15%, 12%);
+    --color-text: hsl(256, 10%, 90%);
+    --color-border: hsl(256, 15%, 25%);
+    --color-link: hsl(265, 80%, 65%);
+    --color-link-hover: hsl(265, 90%, 75%);
+  }
+  html {
+    font-family: system-ui, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+  body {
+    display: grid;
+    place-content: center;
+  }
+  /* Base checkbox styling */
+  button {
+    background-color: var(--color-link);
+    color: var(--color-bg);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+  .container {
+    display: flex;
+    gap: 3rem;
+    padding: 1rem;
+    margin: 0 auto;
+
+    max-width: 1024px;
+    line-height: 1.5;
+  }
+</style>

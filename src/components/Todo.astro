@@ -7,17 +7,81 @@ const { todo, categoryName } = Astro.props
   <input type="hidden" name="todoId" value={todo.id} />
   <input type="hidden" name="streakValue" value={todo.streak} />
   <input type="hidden" name="_method" value="PUT" />
-  <p>
-    {categoryName} -
+  <div class="todo-item">
     <label>
-      {todo.name}
       <input
         type="checkbox"
         name="checked"
         checked={todo.checked}
         onchange="this.form.submit()"
       />
+      {todo.name}
     </label>
-    streak: {todo.streak}
-  </p>
+    <span class="todo-category">
+      {categoryName}
+    </span>
+    <span>
+      streak: {todo.streak}
+    </span>
+  </div>
 </form>
+
+<style>
+  input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    /* Remove most all native input styles */
+    appearance: none;
+    /* For iOS < 15 */
+    background-color: var(--color-border);
+    /* Not removed via appearance */
+    margin: 0;
+
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+
+    display: inline-grid;
+    place-content: center;
+  }
+
+  input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transform-origin: bottom left;
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--color-text);
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+  }
+
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
+
+  input[type="checkbox"]:focus {
+    outline: max(2px, 0.15em) solid currentColor;
+    outline-offset: max(2px, 0.15em);
+  }
+  label {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .todo-item {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .todo-category {
+    color: var(--color-link-hover);
+    font-weight: bold;
+  }
+</style>

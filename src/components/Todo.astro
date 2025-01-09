@@ -2,27 +2,28 @@
 const { todo, categoryName } = Astro.props
 ---
 
-<form method="POST">
-  <input type="hidden" name="formType" value="updateTodo" />
-  <input type="hidden" name="todoId" value={todo.id} />
-  <input type="hidden" name="streakValue" value={todo.streak} />
-  <input type="hidden" name="_method" value="PUT" />
-  <div class="todo-item">
-    <label>
-      <input
-        type="checkbox"
-        name="checked"
-        checked={todo.checked}
-        onchange="this.form.submit()"
-      />
-      {todo.name}
-    </label>
-
-    <span>
-      streak: {todo.streak}
-    </span>
-  </div>
-</form>
+<div class="todo-container">
+  <span class="streak">
+    {todo.streak}
+  </span>
+  <form method="POST">
+    <input type="hidden" name="formType" value="updateTodo" />
+    <input type="hidden" name="todoId" value={todo.id} />
+    <input type="hidden" name="streakValue" value={todo.streak} />
+    <input type="hidden" name="_method" value="PUT" />
+    <div class="todo-item">
+      <label>
+        <input
+          type="checkbox"
+          name="checked"
+          checked={todo.checked}
+          onchange="this.form.submit()"
+        />
+        {todo.name}
+      </label>
+    </div>
+  </form>
+</div>
 
 <style>
   input[type="checkbox"] {
@@ -67,15 +68,14 @@ const { todo, categoryName } = Astro.props
     display: flex;
     gap: 1rem;
     align-items: baseline;
-    min-width: 300px;
   }
-  .todo-item {
+  .todo-container {
     display: flex;
-    gap: 0.5rem;
   }
 
-  .todo-category {
-    color: var(--color-link-hover);
-    font-weight: bold;
+  .streak {
+    font-weight: 600;
+    font-style: italic;
+    width: 64px;
   }
 </style>

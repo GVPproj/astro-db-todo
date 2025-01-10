@@ -1,8 +1,7 @@
 ---
-import { Categories, ToDos, db } from "astro:db"
+import { ToDos, db } from "astro:db"
 import Todo from "./Todo.astro"
 
-const categories = await db.select().from(Categories)
 const todos = await db.select().from(ToDos)
 
 const priority1 = todos.filter((todo) => todo.priority === 1)
@@ -14,7 +13,7 @@ const priority3 = todos.filter((todo) => todo.priority === 3)
   {
     priority1.length > 0 && (
       <>
-        <h2>Priority 1</h2>
+        <h3>##### Always</h3>
         <ul>
           {priority1.map((todo) => (
             <li>
@@ -28,7 +27,7 @@ const priority3 = todos.filter((todo) => todo.priority === 3)
   {
     priority2.length > 0 && (
       <>
-        <h2>Priority 2</h2>
+        <h3>##### Most Days</h3>
         <ul>
           {priority2.map((todo) => (
             <li>
@@ -42,7 +41,7 @@ const priority3 = todos.filter((todo) => todo.priority === 3)
   {
     priority3.length > 0 && (
       <>
-        <h2>Priority 3</h2>
+        <h3>##### Sometimes</h3>
         <ul>
           {priority3.map((todo) => (
             <li>
@@ -54,30 +53,7 @@ const priority3 = todos.filter((todo) => todo.priority === 3)
     )
   }
 
-  <!-- {
-    categories.map((category) => {
-      const categoryTodos = todos.filter(
-        (todo) => todo.categoryId === category.id
-      )
-      return (
-        <article>
-          <h2>{category.name}</h2>
-          <ul>
-            {categoryTodos.map((todo) => (
-              <li>
-                <Todo todo={todo} />
-              </li>
-            ))}
-          </ul>
-        </article>
-      )
-    })
-  } -->
-
   <style>
-    /* #todo-list {
-    background-color: darkblue;
-  } */
     ul {
       list-style-type: none;
       padding: 0;

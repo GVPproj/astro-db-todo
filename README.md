@@ -14,3 +14,4 @@ DB deployed at [Turso](https://docs.turso.tech/introduction).
 
 - streak checks per day
 - Astro <ClientRouter /> for UI transitions
+- document installation and deployment process for other users

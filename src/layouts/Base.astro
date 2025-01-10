@@ -11,7 +11,7 @@ import Navigation from "../components/Navigation.astro"
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="dark" />
     <title>Todo App with Streaks</title>
-    <ClientRouter />
+    <!-- <ClientRouter /> -->
   </head>
   <body>
     <Navigation />
@@ -29,6 +29,12 @@ import Navigation from "../components/Navigation.astro"
   *::before,
   *::after {
     box-sizing: border-box;
+  }
+
+  input:focus,
+  select:focus,
+  button:focus {
+    outline: 2px solid var(--color-link);
   }
 
   /* 2. Remove default margin */
@@ -105,6 +111,15 @@ import Navigation from "../components/Navigation.astro"
     background-color: var(--color-bg);
     color: var(--color-text);
   }
+  header {
+    max-width: 1024px;
+    margin: 2rem auto 4rem;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
 
   button {
     font-family: inherit;
@@ -120,11 +135,23 @@ import Navigation from "../components/Navigation.astro"
     background-color: var(--color-link);
   }
 
+  dialog {
+    padding: 1.75rem 2.25rem;
+    place-self: center;
+    border: 2px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+
+  dialog::backdrop {
+    background: #fff1;
+    backdrop-filter: blur(4px);
+  }
+
   .container {
     display: flex;
     margin: 0 auto;
+    padding: 0 2rem;
     gap: 8rem;
-    padding: 1rem 3rem;
     max-width: 1024px;
     line-height: 1.5;
   }

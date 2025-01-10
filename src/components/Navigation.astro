@@ -1,6 +1,7 @@
 ---
 import { getSession } from "auth-astro/server"
-
+import { Categories, db } from "astro:db"
+const categories = await db.select().from(Categories)
 const session = await getSession(Astro.request)
 ---
 
@@ -19,24 +20,54 @@ const session = await getSession(Astro.request)
       <button id="login">Login</button>
     )
   }
+  <dialog>
+    <form id="todo-form" method="POST" class="form-container">
+      <input type="hidden" name="formType" value="todo" />
+      <div>
+        <label for="name">Todo Name</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div>
+        <label for="categoryId">Category</label>
+        <select id="categoryId" name="categoryId" required>
+          <option value="">Select a category</option>
+          {
+            categories.map((category) => (
+              <option value={category.id}>{category.name}</option>
+            ))
+          }
+        </select>
+      </div>
+      <footer>
+        <button onclick="this.closest('dialog')?.close()">Close</button>
+        <button type="submit">Add Todo</button>
+      </footer>
+    </form>
+  </dialog>
 </header>
 
 <script>
   const { signIn, signOut } = await import("auth-astro/client")
-  document
-    .querySelector("#login")
-    ?.addEventListener("click", () => signIn("github"))
-  document.querySelector("#logout")?.addEventListener("click", () => signOut())
+
+  const login = document.querySelector("#login")
+  const logout = document.querySelector("#logout")
+  const dialog = document.querySelector("dialog")
+  const todoButton = document.querySelector("#todo")
+
+  login?.addEventListener("click", () => signIn("github"))
+  logout?.addEventListener("click", () => signOut())
+
+  todoButton?.addEventListener("click", () => {
+    dialog?.showModal()
+  })
 </script>
 
 <style>
-  header {
-    max-width: 1024px;
-    margin: 2rem auto;
+  footer {
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    gap: 1rem;
+    justify-content: flex-end;
   }
   #actions {
     display: flex;
@@ -44,5 +75,19 @@ const session = await getSession(Astro.request)
   }
   #login {
     margin-left: auto;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .sub-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
   }
 </style>

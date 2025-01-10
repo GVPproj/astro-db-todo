@@ -5,19 +5,19 @@ import { handleFormSubmission } from "../utils/formHandler"
 import BaseLayout from "../layouts/Base.astro"
 import { getSession } from "auth-astro/server"
 
+const session = await getSession(Astro.request)
+if (!session) {
+  return Astro.redirect("/login", 303)
+}
+
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData()
   await handleFormSubmission(formData)
   return Astro.redirect("/", 303)
 }
-
-const session = await getSession(Astro.request)
-if (!session) {
-  return Astro.redirect("/login", 303)
-}
 ---
 
 <BaseLayout>
-  <TodoForm />
   <TodoList />
+  <TodoForm />
 </BaseLayout>

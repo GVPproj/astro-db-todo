@@ -6,7 +6,7 @@ const categories = await db.select().from(Categories)
 const todos = await db.select().from(ToDos)
 ---
 
-<div transition:animate="fade">
+<div id="todo-list">
   {
     categories.map((category) => {
       const categoryTodos = todos.filter(
@@ -29,6 +29,9 @@ const todos = await db.select().from(ToDos)
 </div>
 
 <style>
+  /* #todo-list {
+    background-color: darkblue;
+  } */
   ul {
     list-style-type: none;
     padding: 0;

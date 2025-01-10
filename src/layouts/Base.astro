@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions"
+import Navigation from "../components/Navigation.astro"
 ---
 
 <html lang="en">
@@ -13,13 +14,83 @@ import { ClientRouter } from "astro:transitions"
     <ClientRouter />
   </head>
   <body>
+    <Navigation />
     <section class="container">
       <slot />
     </section>
   </body>
 </html>
 
-<style>
+<style is:global>
+  /* RESET */
+
+  /* 1. Use a more-intuitive box-sizing model */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* 2. Remove default margin */
+  * {
+    margin: 0;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 5. Improve media defaults */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* 6. Inherit fonts for form controls */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  /* 7. Avoid text overflows */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  /* 8. Improve line wrapping */
+  p {
+    text-wrap: pretty;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+
+  /*
+  9. Create a root stacking context
+*/
+  #root,
+  #__next {
+    isolation: isolate;
+  }
+
   :root {
     font-size: 18px;
     --color-bg: hsl(256, 15%, 12%);
@@ -35,12 +106,25 @@ import { ClientRouter } from "astro:transitions"
     color: var(--color-text);
   }
 
+  button {
+    font-family: inherit;
+    background-color: var(--color-bg);
+    color: var(--color-bg);
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: var(--color-link);
+  }
+
   .container {
     display: flex;
+    margin: 0 auto;
     gap: 8rem;
     padding: 1rem 3rem;
-    /* margin: 0 auto; */
-
     max-width: 1024px;
     line-height: 1.5;
   }

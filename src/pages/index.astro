@@ -18,45 +18,11 @@ const session = await getSession(Astro.request)
   {
     session ? (
       <>
-        <div>
-          <button id="logout">Logout</button>
-        </div>
         <TodoForm />
         <TodoList />
       </>
     ) : (
-      <>
-        <button id="login">Login</button>
-        <p>Not logged in</p>
-      </>
+      <p>Not logged in</p>
     )
   }
 </BaseLayout>
-
-<script>
-  const { signIn, signOut } = await import("auth-astro/client")
-  document
-    .querySelector("#login")
-    ?.addEventListener("click", () => signIn("github"))
-  document.querySelector("#logout")?.addEventListener("click", () => signOut())
-</script>
-
-<style>
-  button {
-    font-family: inherit;
-    background-color: var(--color-bg);
-    color: var(--color-bg);
-    border: 2px solid var(--color-border);
-    color: var(--color-text);
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    margin-bottom: 0.5rem;
-    position: fixed;
-    top: 3rem;
-    right: 8rem;
-  }
-  button:hover {
-    background-color: var(--color-link);
-  }
-</style>

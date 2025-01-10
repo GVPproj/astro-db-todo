@@ -1,0 +1,39 @@
+---
+import { getSession } from "auth-astro/server"
+
+const session = await getSession(Astro.request)
+---
+
+<header>
+  {
+    session ? (
+      <>
+        <button id="todo">Todo</button>
+        <button id="categories">Categories</button>
+        <button id="projects">Projects</button>
+        <button id="logout">Logout</button>
+      </>
+    ) : (
+      <button id="login">Login</button>
+    )
+  }
+</header>
+
+<script>
+  const { signIn, signOut } = await import("auth-astro/client")
+  document
+    .querySelector("#login")
+    ?.addEventListener("click", () => signIn("github"))
+  document.querySelector("#logout")?.addEventListener("click", () => signOut())
+</script>
+
+<style>
+  header {
+    max-width: 1024px;
+    margin: 2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2rem;
+  }
+</style>

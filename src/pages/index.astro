@@ -12,17 +12,12 @@ if (Astro.request.method === "POST") {
 }
 
 const session = await getSession(Astro.request)
+if (!session) {
+  return Astro.redirect("/login", 303)
+}
 ---
 
 <BaseLayout>
-  {
-    session ? (
-      <>
-        <TodoForm />
-        <TodoList />
-      </>
-    ) : (
-      <p>Not logged in</p>
-    )
-  }
+  <TodoForm />
+  <TodoList />
 </BaseLayout>

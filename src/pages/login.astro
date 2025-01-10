@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../layouts/Base.astro"
+import { getSession } from "auth-astro/server"
+
+const session = await getSession(Astro.request)
+if (session) {
+  return Astro.redirect("/", 303)
+}
+---
+
+<BaseLayout>
+  <p>Please log in</p>
+</BaseLayout>

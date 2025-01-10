@@ -8,9 +8,11 @@ const session = await getSession(Astro.request)
   {
     session ? (
       <>
-        <button id="todo">Todo</button>
-        <button id="categories">Categories</button>
-        <button id="projects">Projects</button>
+        <div id="actions">
+          <button id="todo">Todo</button>
+          <button id="categories">Categories</button>
+          <button id="projects">Projects</button>
+        </div>
         <button id="logout">Logout</button>
       </>
     ) : (
@@ -33,7 +35,14 @@ const session = await getSession(Astro.request)
     margin: 2rem auto;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 2rem;
+  }
+  #actions {
+    display: flex;
+    gap: 2rem;
+  }
+  #login {
+    margin-left: auto;
   }
 </style>

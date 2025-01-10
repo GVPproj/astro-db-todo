@@ -14,6 +14,12 @@ const ToDos = defineTable({
     name: column.text(),
     checked: column.boolean(),
     streak: column.number(),
+    priority: column.number({
+      min: 1,
+      max: 3,
+      default: 2,
+      integer: true,
+    }),
     updatedAt: column.date(),
   },
 })

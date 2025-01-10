@@ -8,12 +8,18 @@ const handleFormSubmission = async (formData: FormData) => {
     case "todo": {
       const categoryId = formData.get("categoryId")
       const name = formData.get("name")
-      if (typeof categoryId === "string" && typeof name === "string") {
+      const priority = formData.get("priority")
+      if (
+        typeof categoryId === "string" &&
+        typeof name === "string" &&
+        typeof priority === "string"
+      ) {
         await db.insert(ToDos).values({
           categoryId,
           name,
           checked: false,
           streak: 0,
+          priority: priority ? parseInt(priority) : 1,
           id: crypto.randomUUID(),
           updatedAt: new Date(),
         })

@@ -1,6 +1,11 @@
 ---
+import { Categories, ToDos, db } from "astro:db"
 import { getSession } from "auth-astro/server"
+
 const session = await getSession(Astro.request)
+
+const categories = await db.select().from(Categories)
+
 import DialogTodo from "./dialogs/DialogTodo.astro"
 import DialogCatergories from "./dialogs/DialogCatergories.astro"
 ---
@@ -10,9 +15,8 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
     session ? (
       <>
         <div id="actions">
-          <button id="todo">Add Todo</button>
+          {categories.length > 0 && <button id="todo">Add Todo</button>}
           <button id="categories">Add Category</button>
-          {/* <button id="projects">Projects</button> */}
         </div>
         <button id="logout">Logout</button>
       </>

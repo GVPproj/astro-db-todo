@@ -20,6 +20,14 @@ const categories = await db.select().from(Categories)
         }
       </select>
     </div>
+    <div class="category-select">
+      <label for="priority">Priority</label>
+      <select id="priority" name="priority" required>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+      </select>
+    </div>
     <footer>
       <button onclick="this.closest('dialog')?.close()">Close</button>
       <button type="submit">Add Todo</button>

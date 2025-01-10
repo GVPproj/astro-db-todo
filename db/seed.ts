@@ -20,6 +20,7 @@ export default async function seed() {
       checked: false,
       streak: 0,
       id: crypto.randomUUID(),
+      priority: 1,
       updatedAt: new Date(),
     },
     {
@@ -27,6 +28,7 @@ export default async function seed() {
       name: "code a button",
       checked: false,
       streak: 0,
+      priority: 2,
       id: crypto.randomUUID(),
       updatedAt: new Date(),
     },

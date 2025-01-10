@@ -1,11 +1,15 @@
 ---
+import { Categories, eq, db } from "astro:db"
 const { todo } = Astro.props
+const category = await db
+  .select()
+  .from(Categories)
+  .where(eq(Categories.id, todo.categoryId))
+
+const catName = category[0].name
 ---
 
 <div class="todo-container">
-  <span class="streak">
-    {todo.streak}
-  </span>
   <form method="POST">
     <input type="hidden" name="formType" value="updateTodo" />
     <input type="hidden" name="todoId" value={todo.id} />
@@ -19,10 +23,13 @@ const { todo } = Astro.props
           checked={todo.checked}
           onchange="this.form.submit()"
         />
-        {todo.name}
+        {catName} - {todo.name}
       </label>
     </div>
   </form>
+  <span class="streak">
+    Streak: {todo.streak}
+  </span>
   <form method="POST">
     <input type="hidden" name="formType" value="deleteTodo" />
     <input type="hidden" name="todoId" value={todo.id} />
@@ -101,6 +108,6 @@ const { todo } = Astro.props
   .streak {
     font-weight: 600;
     font-style: italic;
-    width: 64px;
+    width: 120px;
   }
 </style>

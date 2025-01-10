@@ -1,0 +1,80 @@
+---
+import { Categories, db } from "astro:db"
+
+const categories = await db.select().from(Categories)
+---
+
+<dialog id="categories-dialog">
+  <div class="form-container">
+    <form method="POST" class="sub-form">
+      <input type="hidden" name="formType" value="category" />
+      <div>
+        <label for="categoryName">Category Name</label>
+        <input type="text" id="categoryName" name="name" required />
+      </div>
+      <button type="submit">Add Category</button>
+    </form>
+    <form method="POST" class="sub-form">
+      <input type="hidden" name="formType" value="removeCategory" />
+      <div>
+        <label for="categoryId">Remove Category</label>
+        <select id="categoryId" name="categoryId" required>
+          <option value="">Select a category</option>
+          {
+            categories.map((category) => (
+              <option value={category.id}>{category.name}</option>
+            ))
+          }
+        </select>
+      </div>
+      <button type="submit">Remove Category</button>
+    </form>
+    <footer>
+      <button onclick="this.closest('dialog')?.close()">Close</button>
+    </footer>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById("categories-dialog")
+  const categoriesButton = document.querySelector("#categories")
+
+  if (dialog instanceof HTMLDialogElement) {
+    categoriesButton?.addEventListener("click", () => {
+      dialog.showModal()
+    })
+  }
+</script>
+
+<style>
+  footer {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  button {
+    align-self: flex-end;
+  }
+
+  .category-select {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .sub-form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+</style>

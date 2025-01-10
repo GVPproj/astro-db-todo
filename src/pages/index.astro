@@ -1,7 +1,6 @@
 ---
 import TodoList from "../components/TodoList.astro"
-import TodoForm from "../components/TodoForm.astro"
-import { handleFormSubmission } from "../utils/formHandler"
+import handleFormSubmission from "../utils/formHandler"
 import BaseLayout from "../layouts/Base.astro"
 import { getSession } from "auth-astro/server"
 
@@ -19,5 +18,4 @@ if (Astro.request.method === "POST") {
 
 <BaseLayout>
   <TodoList />
-  <TodoForm />
 </BaseLayout>

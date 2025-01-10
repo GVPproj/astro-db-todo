@@ -1,7 +1,7 @@
 import { db, ToDos, Categories, eq } from "astro:db"
 import { getFormDataValue, calculateNewStreak } from "../utils/formUtils"
 
-export async function handleFormSubmission(formData: FormData) {
+const handleFormSubmission = async (formData: FormData) => {
   const formType = formData.get("formType")
 
   switch (formType) {
@@ -87,3 +87,5 @@ export async function handleFormSubmission(formData: FormData) {
       break
   }
 }
+
+export default handleFormSubmission

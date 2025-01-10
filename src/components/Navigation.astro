@@ -2,6 +2,7 @@
 import { getSession } from "auth-astro/server"
 const session = await getSession(Astro.request)
 import DialogTodo from "./dialogs/DialogTodo.astro"
+import DialogCatergories from "./dialogs/DialogCatergories.astro"
 ---
 
 <header>
@@ -9,9 +10,9 @@ import DialogTodo from "./dialogs/DialogTodo.astro"
     session ? (
       <>
         <div id="actions">
-          <button id="todo">Todo</button>
-          <button id="categories">Categories</button>
-          <button id="projects">Projects</button>
+          <button id="todo">Add Todo</button>
+          <button id="categories">Add Category</button>
+          {/* <button id="projects">Projects</button> */}
         </div>
         <button id="logout">Logout</button>
       </>
@@ -20,6 +21,7 @@ import DialogTodo from "./dialogs/DialogTodo.astro"
     )
   }
   <DialogTodo />
+  <DialogCatergories />
 </header>
 
 <script>

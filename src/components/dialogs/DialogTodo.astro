@@ -3,7 +3,7 @@ import { Categories, db } from "astro:db"
 const categories = await db.select().from(Categories)
 ---
 
-<dialog>
+<dialog id="todo-dialog">
   <form id="todo-form" method="POST" class="form-container">
     <input type="hidden" name="formType" value="todo" />
     <div>
@@ -13,7 +13,6 @@ const categories = await db.select().from(Categories)
     <div class="category-select">
       <label for="categoryId">Category</label>
       <select id="categoryId" name="categoryId" required>
-        <!-- <option value="">Select a category</option> -->
         {
           categories.map((category) => (
             <option value={category.id}>{category.name}</option>
@@ -29,12 +28,14 @@ const categories = await db.select().from(Categories)
 </dialog>
 
 <script>
-  const dialog = document.querySelector("dialog")
+  const dialog = document.getElementById("todo-dialog")
   const todoButton = document.querySelector("#todo")
 
-  todoButton?.addEventListener("click", () => {
-    dialog?.showModal()
-  })
+  if (dialog instanceof HTMLDialogElement) {
+    todoButton?.addEventListener("click", () => {
+      dialog.showModal()
+    })
+  }
 </script>
 
 <style>

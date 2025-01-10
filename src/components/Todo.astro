@@ -31,11 +31,13 @@ const catName = category[0].name
             minWidth: "22ch",
           }}
         >
-          <span style={{ fontStyle: "italic" }}>{catName}</span>
-          <span>{todo.name}</span>
-          <span class="streak">
-            Streak: {todo.streak}
+          <span style={{ fontStyle: "italic" }}
+            >{catName} | Streak: {todo.streak}
           </span>
+          <span style={{ fontSize: "1.25rem" }}>{todo.name}</span>
+          <!-- <span class="streak"> -->
+          <!-- Streak: {todo.streak} -->
+          <!-- </span> -->
         </div>
       </label>
     </div>
@@ -65,42 +67,6 @@ const catName = category[0].name
 </div>
 
 <style>
-  input[type="checkbox"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: var(--color-bg);
-    margin: 0;
-    margin-right: 1rem;
-    font: inherit;
-    color: currentColor;
-    width: 1.15em;
-    height: 1.15em;
-    border: 2px solid var(--color-border);
-    border-radius: 0.15em;
-    transform: translateY(-0.075em);
-    cursor: pointer;
-    display: inline-grid;
-    align-self: center;
-    place-content: center;
-  }
-
-  input[type="checkbox"]::before {
-    content: "";
-    width: 0.65em;
-    height: 0.65em;
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-    transform: scale(0);
-    transform-origin: bottom left;
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em var(--color-text);
-    /* Windows High Contrast Mode */
-    background-color: CanvasText;
-  }
-
-  input[type="checkbox"]:checked::before {
-    transform: scale(1);
-  }
-
   label {
     display: flex;
     gap: 1rem;

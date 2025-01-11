@@ -1,6 +1,8 @@
 ---
-import { ClientRouter } from "astro:transitions"
+// import { ClientRouter } from "astro:transitions"
 import Navigation from "../components/Navigation.astro"
+
+import "../layouts/styles/reset.css"
 ---
 
 <html lang="en">
@@ -14,89 +16,16 @@ import Navigation from "../components/Navigation.astro"
     <!-- <ClientRouter /> -->
   </head>
   <body>
-    <Navigation />
-    <section class="container">
-      <slot />
-    </section>
+    <div id="layout">
+      <Navigation />
+      <section class="container">
+        <slot />
+      </section>
+    </div>
   </body>
 </html>
 
 <style is:global>
-  /* RESET */
-
-  /* 1. Use a more-intuitive box-sizing model */
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  input:focus,
-  select:focus,
-  button:focus {
-    outline: 2px solid var(--color-link);
-  }
-
-  /* 2. Remove default margin */
-  * {
-    margin: 0;
-  }
-
-  body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* 5. Improve media defaults */
-  img,
-  picture,
-  video,
-  canvas,
-  svg {
-    display: block;
-    max-width: 100%;
-  }
-
-  /* 6. Inherit fonts for form controls */
-  input,
-  button,
-  textarea,
-  select {
-    font: inherit;
-  }
-
-  /* 7. Avoid text overflows */
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    overflow-wrap: break-word;
-  }
-
-  /* 8. Improve line wrapping */
-  p {
-    text-wrap: pretty;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    text-wrap: balance;
-  }
-
-  /*
-  9. Create a root stacking context
-*/
-  #root,
-  #__next {
-    isolation: isolate;
-  }
-
   :root {
     font-size: 18px;
     --color-bg: hsl(256, 15%, 12%);
@@ -110,15 +39,6 @@ import Navigation from "../components/Navigation.astro"
     font-family: monospace;
     background-color: var(--color-bg);
     color: var(--color-text);
-  }
-  header {
-    max-width: 1024px;
-    margin: 2rem auto 4rem;
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
   }
 
   button {
@@ -182,12 +102,21 @@ import Navigation from "../components/Navigation.astro"
     transform: scale(1);
   }
 
+  #layout {
+    display: flex;
+    height: 100svh;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
   .container {
     display: flex;
-    margin: 0 auto;
-    padding: 0 2rem;
+    align-items: flex-start;
+    padding-top: 2rem;
     gap: 8rem;
-    max-width: 1024px;
+    align-self: flex-start;
     line-height: 1.5;
+    max-height: 100svh;
+    overflow-x: scroll;
   }
 </style>

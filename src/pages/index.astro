@@ -3,6 +3,7 @@ import TodoList from "../components/TodoList.astro"
 import handleFormSubmission from "../utils/formHandler"
 import BaseLayout from "../layouts/Base.astro"
 import { getSession } from "auth-astro/server"
+import Navigation from "../components/Navigation.astro"
 
 const session = await getSession(Astro.request)
 if (!session) {
@@ -19,3 +20,5 @@ if (Astro.request.method === "POST") {
 <BaseLayout>
   <TodoList />
 </BaseLayout>
+
+<style></style>

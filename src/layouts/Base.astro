@@ -115,7 +115,6 @@ import "../layouts/styles/reset.css"
     align-items: flex-start;
     padding-top: 2rem;
     gap: 8rem;
-    /* line-height: 1.5; */
     overflow-y: auto;
     padding-left: 2rem;
   }
@@ -142,17 +141,28 @@ import "../layouts/styles/reset.css"
     #layout {
       flex-direction: column-reverse;
     }
+
+    .container {
+      padding: 0;
+      padding-top: 1rem;
+      margin: 0 1rem;
+      font-size: 0.875rem;
+    }
     header {
       border-right: none;
       border-top: 1px solid var(--color-border);
       flex-direction: row;
       align-items: center;
-      height: auto; /* Remove the 100% height on mobile */
-      /* justify-content: space-between; */
+      height: auto;
+      justify-content: center;
+      gap: 1.25rem;
+      padding: 1rem;
+      font-size: 0.75rem;
     }
 
     #actions {
       flex-direction: row;
+      gap: 1.25rem;
     }
   }
 </style>

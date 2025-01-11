@@ -34,10 +34,7 @@ const catName = category[0].name
           <span style={{ fontStyle: "italic" }}
             >{catName} | Streak: {todo.streak}
           </span>
-          <span style={{ fontSize: "1.25rem" }}>{todo.name}</span>
-          <!-- <span class="streak"> -->
-          <!-- Streak: {todo.streak} -->
-          <!-- </span> -->
+          <span class="todo-name">{todo.name}</span>
         </div>
       </label>
     </div>
@@ -98,8 +95,16 @@ const catName = category[0].name
     background-color: var(--color-bg-light);
   }
 
+  .todo-name {
+    font-size: 1.25rem;
+  }
   .streak {
     font-weight: 600;
     font-style: italic;
+  }
+  @media (max-width: 768px) {
+    .todo-name {
+      font-size: 1rem;
+    }
   }
 </style>

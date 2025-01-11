@@ -15,8 +15,8 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
     session ? (
       <>
         <div id="actions">
-          {categories.length > 0 && <button id="todo">Add Todo</button>}
-          <button id="categories">Add Category</button>
+          {categories.length > 0 && <button id="todo">Todo</button>}
+          <button id="categories">Category</button>
         </div>
         <button id="logout">Logout</button>
       </>
@@ -37,23 +37,3 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
   login?.addEventListener("click", () => signIn("github"))
   logout?.addEventListener("click", () => signOut())
 </script>
-
-<style>
-  header {
-    padding: 2rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-  #actions {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-  /* #login {
-    margin-left: auto;
-  } */
-</style>

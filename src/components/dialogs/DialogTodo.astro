@@ -6,7 +6,7 @@ const categories = await db.select().from(Categories)
 <dialog id="todo-dialog">
   <form id="todo-form" method="POST" class="form-container">
     <input type="hidden" name="formType" value="todo" />
-    <div>
+    <div class="category-select">
       <label for="name">Todo Name</label>
       <input type="text" id="name" name="name" required />
     </div>
@@ -57,6 +57,7 @@ const categories = await db.select().from(Categories)
     display: flex;
     justify-content: space-between;
     width: 100%;
+    gap: 1rem;
   }
 
   .form-container {
@@ -64,5 +65,15 @@ const categories = await db.select().from(Categories)
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
+  }
+
+  #name {
+    border-radius: 0.15em;
+  }
+
+  @media (max-width: 768px) {
+    .category-select {
+      flex-direction: column;
+    }
   }
 </style>

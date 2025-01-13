@@ -1,0 +1,93 @@
+---
+import { Categories, db } from "astro:db"
+const categories = await db.select().from(Categories)
+import BaseLayout from "../layouts/Base.astro"
+import { getSession } from "auth-astro/server"
+import handleFormSubmission from "../utils/formHandler"
+
+const session = await getSession(Astro.request)
+if (!session) {
+  return Astro.redirect("/login", 303)
+}
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData()
+  await handleFormSubmission(formData)
+  return Astro.redirect("/", 303)
+}
+---
+
+<BaseLayout>
+  <form id="todo-form" method="POST" class="form-container">
+    <input type="hidden" name="formType" value="todo" />
+    <div class="category-select">
+      <label for="name">Todo Name</label>
+      <input type="text" id="name" name="name" required />
+    </div>
+    <div class="category-select">
+      <label for="categoryId">Category</label>
+      <select id="categoryId" name="categoryId" required>
+        {
+          categories.map((category) => (
+            <option value={category.id}>{category.name}</option>
+          ))
+        }
+      </select>
+    </div>
+    <div class="category-select">
+      <label for="priority">Priority</label>
+      <select id="priority" name="priority" required>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+      </select>
+    </div>
+    <footer>
+      <button onclick="this.closest('dialog')?.close()">Close</button>
+      <button type="submit">Add Todo</button>
+    </footer>
+  </form>
+</BaseLayout>
+
+<script>
+  const dialog = document.getElementById("todo-dialog")
+  const todoButton = document.querySelector("#todo")
+
+  if (dialog instanceof HTMLDialogElement) {
+    todoButton?.addEventListener("click", () => {
+      dialog.showModal()
+    })
+  }
+</script>
+
+<style>
+  footer {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+  .category-select {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  #name {
+    border-radius: 0.15em;
+  }
+
+  @media (max-width: 768px) {
+    .category-select {
+      flex-direction: column;
+    }
+  }
+</style>

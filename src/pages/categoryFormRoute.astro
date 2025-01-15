@@ -1,0 +1,87 @@
+---
+import { Categories, db } from "astro:db"
+const categories = await db.select().from(Categories)
+import BaseLayout from "../layouts/Base.astro"
+import { getSession } from "auth-astro/server"
+import handleFormSubmission from "../utils/formHandler"
+
+const session = await getSession(Astro.request)
+if (!session) {
+  return Astro.redirect("/login", 303)
+}
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData()
+  await handleFormSubmission(formData)
+  return Astro.redirect("/", 303)
+}
+---
+
+<BaseLayout>
+  <form method="POST" class="sub-form">
+    <input type="hidden" name="formType" value="category" />
+    <div>
+      <label for="categoryName">Category Name</label>
+      <input type="text" id="categoryName" name="name" required />
+    </div>
+    <button type="submit">Add Category</button>
+  </form>
+  <form method="POST" class="sub-form">
+    <input type="hidden" name="formType" value="removeCategory" />
+    <div>
+      <label for="categoryId">Remove Category</label>
+      <select id="categoryId" name="categoryId" required>
+        <option value="">Select a category</option>
+        {
+          categories.map((category) => (
+            <option value={category.id}>{category.name}</option>
+          ))
+        }
+      </select>
+    </div>
+    <button type="submit">Remove Category</button>
+  </form>
+</BaseLayout>
+
+<script>
+  const dialog = document.getElementById("todo-dialog")
+  const todoButton = document.querySelector("#todo")
+
+  if (dialog instanceof HTMLDialogElement) {
+    todoButton?.addEventListener("click", () => {
+      dialog.showModal()
+    })
+  }
+</script>
+
+<style>
+  footer {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+  .category-select {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  #name {
+    border-radius: 0.15em;
+  }
+
+  @media (max-width: 768px) {
+    .category-select {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -30,12 +30,12 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
   {
     session ? (
       <div id="actions">
-        {categories.length > 0 && <button id="todo">Todo</button>}
-        <button id="categories">Category</button>
-        <button id="logout">Logout</button>
+        {categories.length > 0 && <a href="/todoFormRoute">Todo</a>}
+        <a href="/categoryFormRoute">Category</a>
+        <button id="logoutFooter">Logout</button>
       </div>
     ) : (
-      <button id="login">Login</button>
+      <button id="loginFooter">Login</button>
     )
   }
 </footer>
@@ -45,9 +45,13 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
 
   const login = document.querySelector("#login")
   const logout = document.querySelector("#logout")
+  const loginFooter = document.querySelector("#loginFooter")
+  const logoutFooter = document.querySelector("#logoutFooter")
 
   login?.addEventListener("click", () => signIn("github"))
+  loginFooter?.addEventListener("click", () => signIn("github"))
   logout?.addEventListener("click", () => signOut())
+  logoutFooter?.addEventListener("click", () => signOut())
 </script>
 
 <style>
@@ -61,6 +65,23 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
     gap: 2rem;
     border-top: none;
     border-right: 1px solid var(--color-border);
+  }
+
+  a {
+    display: grid;
+    place-content: center;
+    text-decoration: none;
+    font-family: inherit;
+    background-color: var(--color-bg);
+    color: var(--color-bg);
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  a:hover {
+    background-color: var(--color-link);
   }
   #actions {
     display: flex;
@@ -93,7 +114,8 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
       padding: 1rem;
       font-size: 0.75rem;
     }
-    button {
+    button,
+    a {
       flex: 1;
       font-size: large;
       border: none;

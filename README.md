@@ -10,9 +10,16 @@ Modals using the [HTML Dialog API](https://developer.mozilla.org/en-US/docs/Web/
 
 DB deployed at [Turso](https://docs.turso.tech/introduction).
 
+## Functions
+
+- pnpm i
+- npx astro db push --remote --force-reset (to reset the db with new tables)
+
 ## Roadmap
 
-- streak checks per day
-- Astro <ClientRouter /> for UI transitions
+- differentiate todos and workouts in db
+- make workouts a separate table and seed data
+
+- streaks reset to 0 if not updated yesterday
+<!-- - Astro <ClientRouter /> for UI transitions  -->
 - document installation and deployment process for other users
-- style Todo items

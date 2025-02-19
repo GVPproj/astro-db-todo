@@ -31,7 +31,7 @@ const category = await db
           <span style={{ fontStyle: "italic" }}
             >{workout.weightPerDumbbell}lbs
           </span>
-          <span style={{ fontStyle: "italic" }}>
+          <span style={{ fontStyle: "italic", minWidth: "max-content" }}>
             {workout.sets} x {workout.reps}
           </span>
         </div>
@@ -40,7 +40,7 @@ const category = await db
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
-            minWidth: "22ch",
+            // minWidth: "22ch",
           }}
         >
           <span style={{ fontWeight: 600 }}>{workout.name}</span>

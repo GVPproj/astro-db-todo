@@ -43,7 +43,6 @@ if (Astro.request.method === "POST") {
       </select>
     </div>
     <footer>
-      <button onclick="this.closest('dialog')?.close()">Close</button>
       <button type="submit">Add Todo</button>
     </footer>
   </form>
@@ -72,13 +71,6 @@ if (Astro.request.method === "POST") {
     justify-content: space-between;
     width: 100%;
     gap: 1rem;
-  }
-
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
   }
 
   #name {

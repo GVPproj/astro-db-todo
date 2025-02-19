@@ -1,4 +1,11 @@
-import { db, ToDos, Categories, eq } from "astro:db"
+import {
+  db,
+  ToDos,
+  Categories,
+  eq,
+  WorkoutCategories,
+  Workouts,
+} from "astro:db"
 import { getFormDataValue, calculateNewStreak } from "../utils/formUtils"
 
 const handleFormSubmission = async (formData: FormData) => {
@@ -38,6 +45,17 @@ const handleFormSubmission = async (formData: FormData) => {
       break
     }
 
+    case "workoutCategory": {
+      const name = formData.get("name")
+      if (typeof name === "string") {
+        await db.insert(WorkoutCategories).values({
+          name,
+          id: crypto.randomUUID(),
+        })
+      }
+      break
+    }
+
     case "removeCategory": {
       const categoryId = getFormDataValue(formData, "categoryId")
 
@@ -58,6 +76,32 @@ const handleFormSubmission = async (formData: FormData) => {
 
       if (categoryId) {
         await db.delete(Categories).where(eq(Categories.id, categoryId))
+      }
+      break
+    }
+
+    case "removeWorkoutCategory": {
+      const categoryId = getFormDataValue(formData, "categoryId")
+
+      const workoutsInCategory = await db
+        .select()
+        .from(Workouts)
+        .where(eq(Workouts.categoryId, categoryId as string))
+
+      if (workoutsInCategory.length > 0) {
+        try {
+          for (const workout of workoutsInCategory) {
+            await db.delete(Workouts).where(eq(Workouts.id, workout.id))
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      if (categoryId) {
+        await db
+          .delete(WorkoutCategories)
+          .where(eq(WorkoutCategories.id, categoryId))
       }
       break
     }

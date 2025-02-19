@@ -8,6 +8,7 @@ const categories = await db.select().from(Categories)
 
 import DialogTodo from "./dialogs/DialogTodo.astro"
 import DialogCatergories from "./dialogs/DialogCatergories.astro"
+import DialogWorkoutCategories from "./dialogs/DialogWorkoutCategories.astro"
 ---
 
 <header>
@@ -16,6 +17,7 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
       <div id="actions">
         {categories.length > 0 && <button id="todo">Todo</button>}
         <button id="categories">Category</button>
+        <button id="workoutCategories">Workout Category</button>
         <button id="logout">Logout</button>
       </div>
     ) : (
@@ -24,6 +26,7 @@ import DialogCatergories from "./dialogs/DialogCatergories.astro"
   }
   <DialogTodo />
   <DialogCatergories />
+  <DialogWorkoutCategories />
 </header>
 
 <footer>

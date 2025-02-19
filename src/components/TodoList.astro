@@ -1,5 +1,5 @@
 ---
-import { ToDos, db } from "astro:db"
+import { ToDos, Workouts, db } from "astro:db"
 import Todo from "./Todo.astro"
 
 const todos = await db.select().from(ToDos)

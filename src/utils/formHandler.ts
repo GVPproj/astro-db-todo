@@ -37,15 +37,18 @@ const handleFormSubmission = async (formData: FormData) => {
     case "workout": {
       const categoryId = formData.get("categoryId")
       const name = formData.get("name")
+      const weightPerDumbbell = formData.get("weightPerDumbbell")
+      const reps = formData.get("reps")
+      const sets = formData.get("sets")
       if (typeof categoryId === "string" && typeof name === "string") {
         await db.insert(Workouts).values({
           categoryId,
           name,
           checked: false,
           count: 0,
-          weightPerDumbbell: 10,
-          reps: 10,
-          sets: 3,
+          weightPerDumbbell: Number(weightPerDumbbell),
+          reps: Number(reps),
+          sets: Number(sets),
           id: crypto.randomUUID(),
           updatedAt: new Date(),
         })

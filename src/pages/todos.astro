@@ -12,11 +12,10 @@ if (!session) {
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData()
   await handleFormSubmission(formData)
-  return Astro.redirect("/", 303)
+  return Astro.redirect("/todos", 303)
 }
 ---
 
 <BaseLayout>
-  <a href="/todos">Todo List</a>
-  <a href="/workouts">Workouts List</a>
+  <TodoList />
 </BaseLayout>

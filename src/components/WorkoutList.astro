@@ -1,0 +1,16 @@
+---
+import { Workouts, db } from "astro:db"
+
+const workouts = await db.select().from(Workouts)
+console.log(workouts)
+---
+
+<ul>
+  {
+    workouts.map((workout) => (
+      <li>
+        <a href={`/workouts/${workout.id}`}>{workout.name}</a>
+      </li>
+    ))
+  }
+</ul>

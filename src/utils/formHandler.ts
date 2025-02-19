@@ -135,6 +135,13 @@ const handleFormSubmission = async (formData: FormData) => {
       }
       break
     }
+    case "deleteWorkout": {
+      const workoutId = getFormDataValue(formData, "workoutId")
+      if (workoutId) {
+        await db.delete(Workouts).where(eq(Workouts.id, workoutId))
+      }
+      break
+    }
 
     case "updateTodo": {
       const todoId = getFormDataValue(formData, "todoId")
@@ -150,6 +157,23 @@ const handleFormSubmission = async (formData: FormData) => {
             updatedAt: new Date(),
           })
           .where(eq(ToDos.id, todoId))
+      }
+      break
+    }
+    case "updateWorkout": {
+      const workoutId = getFormDataValue(formData, "workoutId")
+      const countValue = getFormDataValue(formData, "countValue")
+      const isChecked = formData.get("checked") === "on"
+      if (workoutId) {
+        const newCountValue = calculateNewStreak(countValue, isChecked)
+        await db
+          .update(Workouts)
+          .set({
+            checked: isChecked,
+            count: newCountValue,
+            updatedAt: new Date(),
+          })
+          .where(eq(Workouts.id, workoutId))
       }
       break
     }

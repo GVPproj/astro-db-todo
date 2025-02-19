@@ -24,6 +24,30 @@ const ToDos = defineTable({
   },
 })
 
+const Workouts = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    categoryId: column.text({ references: () => WorkoutCategories.columns.id }),
+    name: column.text(),
+    checked: column.boolean(),
+    streak: column.number(),
+    weightLevel: column.number({
+      min: 1,
+      max: 3,
+      default: 2,
+      integer: true,
+    }),
+    updatedAt: column.date(),
+  },
+})
+
+const WorkoutCategories = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    name: column.text(),
+  },
+})
+
 export default defineDb({
-  tables: { Categories, ToDos },
+  tables: { Categories, ToDos, WorkoutCategories, Workouts },
 })

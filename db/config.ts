@@ -29,14 +29,11 @@ const Workouts = defineTable({
     id: column.text({ primaryKey: true }),
     categoryId: column.text({ references: () => WorkoutCategories.columns.id }),
     name: column.text(),
+    weightPerDumbbell: column.number(),
+    sets: column.number(),
+    reps: column.number(),
+    count: column.number(),
     checked: column.boolean(),
-    streak: column.number(),
-    weightLevel: column.number({
-      min: 1,
-      max: 3,
-      default: 2,
-      integer: true,
-    }),
     updatedAt: column.date(),
   },
 })

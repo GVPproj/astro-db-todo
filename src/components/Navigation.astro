@@ -5,18 +5,24 @@ import { getSession } from "auth-astro/server"
 const session = await getSession(Astro.request)
 
 const categories = await db.select().from(Categories)
+const workoutCategories = await db.select().from(WorkoutCategories)
 
 import DialogTodo from "./dialogs/DialogTodo.astro"
 import DialogCatergories from "./dialogs/DialogCatergories.astro"
 import DialogWorkoutCategories from "./dialogs/DialogWorkoutCategories.astro"
+import { WorkoutCategories } from "astro:db"
+import DialogWorkout from "./dialogs/DialogWorkout.astro"
 ---
 
 <header>
   {
     session ? (
       <div id="actions">
+        <p>Todos</p>
         {categories.length > 0 && <button id="todo">Todo</button>}
         <button id="categories">Category</button>
+        <p>Workouts</p>
+        {workoutCategories.length > 0 && <button id="workout">Workout</button>}
         <button id="workoutCategories">Workout Category</button>
         <button id="logout">Logout</button>
       </div>
@@ -25,6 +31,7 @@ import DialogWorkoutCategories from "./dialogs/DialogWorkoutCategories.astro"
     )
   }
   <DialogTodo />
+  <DialogWorkout />
   <DialogCatergories />
   <DialogWorkoutCategories />
 </header>

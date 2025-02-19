@@ -35,27 +35,31 @@ export default async function seed() {
   ])
 
   await db.insert(WorkoutCategories).values([
-    { id: "nkjdsfi", name: "Legs" },
-    { id: "57ndfl", name: "Core" },
-    { id: "zzadsfkj", name: "Upper Body" },
+    { id: "legs123", name: "Legs" },
+    { id: "core123", name: "Core" },
+    { id: "upper123", name: "Upper Body" },
   ])
 
   await db.insert(Workouts).values([
     {
-      categoryId: "nkjdsfi",
-      name: "Bulgarian Split Squat",
+      categoryId: "legs123",
+      name: "Bulgarian squat / Dumbell Scaption",
       checked: false,
-      streak: 0,
-      weightLevel: 1,
+      count: 0,
+      weightPerDumbbell: 10,
+      reps: 10,
+      sets: 3,
       id: crypto.randomUUID(),
       updatedAt: new Date(),
     },
     {
-      categoryId: "zzadsfkj",
-      name: "Dumbbell Bicep Curl",
+      categoryId: "upper123",
+      name: "Arnold Press / Dumbell Bicep Curl",
       checked: false,
-      streak: 0,
-      weightLevel: 2,
+      count: 0,
+      weightPerDumbbell: 10,
+      reps: 10,
+      sets: 3,
       id: crypto.randomUUID(),
       updatedAt: new Date(),
     },

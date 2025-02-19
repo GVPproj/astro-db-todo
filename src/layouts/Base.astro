@@ -3,8 +3,6 @@
 import Navigation from "../components/Navigation.astro"
 
 import "../layouts/styles/reset.css"
-
-
 ---
 
 <html lang="en">
@@ -21,6 +19,10 @@ import "../layouts/styles/reset.css"
     <div id="layout">
       <Navigation />
       <section class="container">
+        <div style={{ marginBottom: "2rem", display: "flex", gap: "3rem" }}>
+          <a href="/todos">Todo List</a>
+          <a href="/workouts">Workouts List</a>
+        </div>
         <slot />
       </section>
     </div>
@@ -116,9 +118,10 @@ import "../layouts/styles/reset.css"
     display: flex;
     align-items: flex-start;
     padding-top: 2rem;
-    gap: 8rem;
+    /* gap: 8rem; */
     overflow-y: auto;
     padding-left: 2rem;
+    flex-direction: column;
   }
 
   @media (max-width: 768px) {
@@ -131,7 +134,8 @@ import "../layouts/styles/reset.css"
       padding-top: 1rem;
       margin: 0 1rem;
       font-size: 0.875rem;
-    /* }
+
+      /* }
     header {
       border-right: none;
       border-top: 1px solid var(--color-border);
@@ -143,7 +147,7 @@ import "../layouts/styles/reset.css"
       padding: 1rem;
       font-size: 0.75rem;
     } */
-
+    }
     dialog {
       width: 100%;
       /* height: 100%; */

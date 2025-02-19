@@ -1,10 +1,92 @@
 ---
 import { Workouts, db } from "astro:db"
 import Workout from "./Workout.astro"
+import { WorkoutCategories } from "astro:db"
 
+// Define interfaces for our data structures
+interface WorkoutType {
+  id: string
+  categoryId: string
+  name: string
+  weightPerDumbbell: number
+  sets: number
+  reps: number
+  count: number
+  checked: boolean
+  updatedAt: Date
+}
+
+interface CategoryType {
+  id: string
+  name: string
+}
+
+interface CategoryWorkouts {
+  category: CategoryType
+  workouts: WorkoutType[]
+}
+
+interface WorkoutsByCategoryMap {
+  [key: string]: CategoryWorkouts
+}
+
+// Fetch all workouts and categories
 const workouts = await db.select().from(Workouts)
+const workoutCategories = await db.select().from(WorkoutCategories)
+
+// Create a map of categories with their workouts
+const workoutsByCategory = workoutCategories.reduce<WorkoutsByCategoryMap>(
+  (acc, category) => {
+    // Find all workouts that belong to this category
+    const categoryWorkouts = workouts.filter(
+      (workout) => workout.categoryId === category.id
+    )
+
+    // Only include categories that have workouts
+    if (categoryWorkouts.length > 0) {
+      acc[category.id] = {
+        category,
+        workouts: categoryWorkouts,
+      }
+    }
+
+    return acc
+  },
+  {}
+)
 ---
 
-<ul>
-  {workouts.map((workout) => <Workout workout={workout} />)}
-</ul>
+<div class="workouts-container">
+  {
+    Object.values(workoutsByCategory).map(({ category, workouts }) => (
+      <div class="category-section">
+        <h2>{category.name}</h2>
+        <div class="workouts-list">
+          {workouts.map((workout) => (
+            <Workout workout={workout} />
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</div>
+<!-- 
+<style>
+  .workouts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .category-section {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background: #f4f4f4;
+  }
+
+  .workouts-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+</style> -->

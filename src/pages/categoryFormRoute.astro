@@ -13,7 +13,7 @@ if (!session) {
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData()
   await handleFormSubmission(formData)
-  return Astro.redirect("/", 303)
+  return Astro.redirect("/todos", 303)
 }
 ---
 

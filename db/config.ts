@@ -1,12 +1,5 @@
 import { defineDb, defineTable, column } from "astro:db"
 
-const Categories = defineTable({
-  columns: {
-    id: column.text({ primaryKey: true }),
-    name: column.text(),
-  },
-})
-
 const ToDos = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
@@ -35,6 +28,13 @@ const Workouts = defineTable({
     count: column.number(),
     checked: column.boolean(),
     updatedAt: column.date(),
+  },
+})
+
+const Categories = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    name: column.text(),
   },
 })
 

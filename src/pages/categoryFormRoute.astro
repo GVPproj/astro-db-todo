@@ -20,15 +20,17 @@ if (Astro.request.method === "POST") {
 <BaseLayout>
   <form method="POST" class="form-container">
     <input type="hidden" name="formType" value="category" />
-    <div class="category-select">
+    <div class="form-field">
       <label for="categoryName">Category Name</label>
       <input type="text" id="categoryName" name="name" required />
     </div>
-    <button type="submit">Add Category</button>
+    <footer>
+      <button type="submit">Add Category</button>
+    </footer>
   </form>
-  <form method="POST" class="sub-form">
+  <form method="POST" class="form-container" id="remove-form">
     <input type="hidden" name="formType" value="removeCategory" />
-    <div class="category-select" style="margin-top: 2rem;">
+    <div class="form-field">
       <label for="categoryId">Remove Category</label>
       <select id="categoryId" name="categoryId" required>
         <option value="">Select a category</option>
@@ -39,7 +41,9 @@ if (Astro.request.method === "POST") {
         }
       </select>
     </div>
-    <button type="submit" style="margin-top: 2rem">Remove Category</button>
+    <footer>
+      <button type="submit" class="remove-btn">Remove Category</button>
+    </footer>
   </form>
 </BaseLayout>
 
@@ -61,19 +65,54 @@ if (Astro.request.method === "POST") {
     gap: 1rem;
     justify-content: flex-end;
   }
-  .category-select {
+  
+  .form-field {
     display: flex;
     justify-content: space-between;
     width: 100%;
     gap: 1rem;
+    margin-bottom: 1rem;
   }
 
-  #name {
+  input, select {
     border-radius: 0.15em;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+  }
+
+  .form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  #remove-form {
+    margin-top: 2rem;
+  }
+
+  button {
+    background-color: #4a8;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.15em;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #3a7;
+  }
+
+  .remove-btn {
+    background-color: #e55;
+  }
+
+  .remove-btn:hover {
+    background-color: #d44;
   }
 
   @media (max-width: 768px) {
-    .category-select {
+    .form-field {
       flex-direction: column;
     }
   }

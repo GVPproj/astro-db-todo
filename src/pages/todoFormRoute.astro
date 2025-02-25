@@ -20,11 +20,11 @@ if (Astro.request.method === "POST") {
 <BaseLayout>
   <form id="todo-form" method="POST" class="form-container">
     <input type="hidden" name="formType" value="todo" />
-    <div class="category-select">
+    <div class="form-field">
       <label for="name">Todo Name</label>
       <input type="text" id="name" name="name" required />
     </div>
-    <div class="category-select">
+    <div class="form-field">
       <label for="categoryId">Category</label>
       <select id="categoryId" name="categoryId" required>
         {
@@ -34,7 +34,7 @@ if (Astro.request.method === "POST") {
         }
       </select>
     </div>
-    <div class="category-select">
+    <div class="form-field">
       <label for="priority">Priority</label>
       <select id="priority" name="priority" required>
         <option value={1}>1</option>
@@ -66,19 +66,41 @@ if (Astro.request.method === "POST") {
     gap: 1rem;
     justify-content: flex-end;
   }
-  .category-select {
+  .form-field {
     display: flex;
     justify-content: space-between;
     width: 100%;
     gap: 1rem;
+    margin-bottom: 1rem;
   }
 
-  #name {
+  input, select {
     border-radius: 0.15em;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+  }
+
+  .form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  button {
+    background-color: #4a8;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.15em;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #3a7;
   }
 
   @media (max-width: 768px) {
-    .category-select {
+    .form-field {
       flex-direction: column;
     }
   }

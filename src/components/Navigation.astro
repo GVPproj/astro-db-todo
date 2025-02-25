@@ -41,7 +41,11 @@ import DialogWorkout from "./dialogs/DialogWorkout.astro"
     session ? (
       <div id="actions">
         {categories.length > 0 && <a href="/todoFormRoute">Todo</a>}
+        {workoutCategories.length > 0 && (
+          <a href="/workoutFormRoute">Workout</a>
+        )}
         <a href="/categoryFormRoute">Category</a>
+        <a href="/workoutCategoryFormRoute">Workout Category</a>
         <button id="logoutFooter">Logout</button>
       </div>
     ) : (

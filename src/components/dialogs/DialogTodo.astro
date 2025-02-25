@@ -5,12 +5,13 @@ const categories = await db.select().from(Categories)
 
 <dialog id="todo-dialog">
   <form id="todo-form" method="POST" class="form-container">
+    <h2>Add New Todo</h2>
     <input type="hidden" name="formType" value="todo" />
-    <div class="category-select">
+    <div class="form-field">
       <label for="name">Todo Name</label>
       <input type="text" id="name" name="name" required />
     </div>
-    <div class="category-select">
+    <div class="form-field">
       <label for="categoryId">Category</label>
       <select id="categoryId" name="categoryId" required>
         {
@@ -20,7 +21,7 @@ const categories = await db.select().from(Categories)
         }
       </select>
     </div>
-    <div class="category-select">
+    <div class="form-field">
       <label for="priority">Priority</label>
       <select id="priority" name="priority" required>
         <option value={1}>1</option>
@@ -29,8 +30,8 @@ const categories = await db.select().from(Categories)
       </select>
     </div>
     <footer>
-      <button onclick="this.closest('dialog')?.close()">Close</button>
-      <button type="submit">Add Todo</button>
+      <button onclick="this.closest('dialog')?.close()" class="cancel-btn">Close</button>
+      <button type="submit" class="add-btn">Add Todo</button>
     </footer>
   </form>
 </dialog>
@@ -47,33 +48,77 @@ const categories = await db.select().from(Categories)
 </script>
 
 <style>
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    width: 100%;
+  }
+
   footer {
     width: 100%;
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
   }
-  .category-select {
+  
+  .form-field {
     display: flex;
     justify-content: space-between;
     width: 100%;
     gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.15em;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .add-btn {
+    background-color: #4a8;
+    color: white;
+  }
+
+  .add-btn:hover {
+    background-color: #3a7;
+  }
+
+  .cancel-btn {
+    background-color: #aaa;
+    color: white;
+  }
+
+  .cancel-btn:hover {
+    background-color: #999;
+  }
+
+  input, select {
+    border-radius: 0.15em;
+    padding: 0.4rem;
+    border: 1px solid #ccc;
   }
 
   .form-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2rem;
-  }
-
-  #name {
-    border-radius: 0.15em;
+    gap: 1rem;
+    padding: 1.5rem;
+    min-width: 400px;
   }
 
   @media (max-width: 768px) {
-    .category-select {
+    .form-field {
       flex-direction: column;
+    }
+    
+    .form-container {
+      min-width: auto;
+      width: 100%;
     }
   }
 </style>

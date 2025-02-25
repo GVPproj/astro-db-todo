@@ -1,11 +1,24 @@
 ---
 import { WorkoutCategories, db } from "astro:db"
 const categories = await db.select().from(WorkoutCategories)
+import BaseLayout from "../layouts/Base.astro"
+import { getSession } from "auth-astro/server"
+import handleFormSubmission from "../utils/formHandler"
+
+const session = await getSession(Astro.request)
+if (!session) {
+  return Astro.redirect("/login", 303)
+}
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData()
+  await handleFormSubmission(formData)
+  return Astro.redirect("/workouts", 303)
+}
 ---
 
-<dialog id="workout-dialog">
+<BaseLayout>
   <form id="workout-form" method="POST" class="form-container">
-    <h2>Add New Workout</h2>
     <input type="hidden" name="formType" value="workout" />
     <div class="form-field">
       <label for="name">Workout Name</label>
@@ -41,38 +54,18 @@ const categories = await db.select().from(WorkoutCategories)
       <input type="number" id="sets" name="sets" min="0" step="1" required />
     </div>
     <footer>
-      <button onclick="this.closest('dialog')?.close()" class="cancel-btn">Close</button>
-      <button type="submit" class="add-btn">Add workout</button>
+      <button type="submit">Add workout</button>
     </footer>
   </form>
-</dialog>
-
-<script>
-  const dialog = document.getElementById("workout-dialog")
-  const workoutButton = document.querySelector("#workout")
-
-  if (dialog instanceof HTMLDialogElement) {
-    workoutButton?.addEventListener("click", () => {
-      dialog.showModal()
-    })
-  }
-</script>
+</BaseLayout>
 
 <style>
-  h2 {
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    width: 100%;
-  }
-
   footer {
     width: 100%;
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
   }
-  
   .form-field {
     display: flex;
     justify-content: space-between;
@@ -81,55 +74,34 @@ const categories = await db.select().from(WorkoutCategories)
     margin-bottom: 1rem;
   }
 
-  button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.15em;
-    cursor: pointer;
-    font-weight: 500;
-  }
-
-  .add-btn {
-    background-color: #4a8;
-    color: white;
-  }
-
-  .add-btn:hover {
-    background-color: #3a7;
-  }
-
-  .cancel-btn {
-    background-color: #aaa;
-    color: white;
-  }
-
-  .cancel-btn:hover {
-    background-color: #999;
-  }
-
   input, select {
     border-radius: 0.15em;
-    padding: 0.4rem;
+    padding: 0.5rem;
     border: 1px solid #ccc;
   }
 
   .form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.5rem;
-    min-width: 400px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  button {
+    background-color: #4a8;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.15em;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #3a7;
   }
 
   @media (max-width: 768px) {
     .form-field {
       flex-direction: column;
-    }
-    
-    .form-container {
-      min-width: auto;
-      width: 100%;
     }
   }
 </style>
